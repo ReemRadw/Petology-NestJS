@@ -18,6 +18,33 @@ model User {
   createdAt DateTime @default(now())
 }
 
-// model pet {
+model Pet {
+  id    Int    @id @default(autoincrement())
+  name  String
+  breed String
+  age   String
+  size  String
+  goodWith String
+  color String
+  hairLength String
+  behaviour String
+  category String
+  user String
+  firstName String
+  lastName String
+  createdAt DateTime @default(now())
 
+}
+
+// ,
+// "image": [
+// "string"
+// ],
+// "description": "string",
+// "phone": "string",
+// "location": "string",
+// "vaccinated": true,
+// "houseTrained": true,
+// "categoryId": 0,
+// "userId": 0
 // }

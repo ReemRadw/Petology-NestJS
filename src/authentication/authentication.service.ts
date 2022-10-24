@@ -15,18 +15,19 @@ import * as jwt from 'jsonwebtoken';
 //  import { User } from '../typeorm/entities/User';
 // import { UserDetails } from '../utils/types';
 
-@Injectable()//able to call many time with same instance
+@Injectable() //able to call many time with same instance
 export class AuthenticationService {
-  constructor(private prisma: PrismaService) {}//define your DB conn
+  constructor(private prisma: PrismaService) {} //define your DB conn
 
-  async signup(dto: SignUp) {//validate first
+  async signup(dto: SignUp) {//validate from dto: pipes
     try {
       const { password, name, email } = dto;
       const hash = await argon.hash(password);
       const user = await this.prisma.user.create({
-        data: {
+        //perform query to Create Record :)
+           data: {//array of data
           email: email,
-          password: hash,
+          password: hash,//top secret
           name: name,
         },
       });
@@ -35,48 +36,67 @@ export class AuthenticationService {
         accessToken,
       };
     } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
+      if (
+        error instanceof
+        PrismaClientKnownRequestError
+      ) {
         if (error.code === 'P2002') {
-          throw new ConflictException('Credentials Taken');
+          throw new ConflictException(
+            'Credentials Taken',
+          );
         }
       }
       throw error;
     }
   }
   async signin(dto: SignIn) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
+    const user =
+      await this.prisma.user.findUnique({
+        where: {
+          email: dto.email,
+        },
+      });
 
-    if (!user) throw new UnauthorizedException('Bad Email');//if passwd doesnt match
-    const pwMatch = await argon.verify(user.password, dto.password);//hashed
-    if (!pwMatch) throw new UnauthorizedException('Bad Password');
+    if (!user)
+      throw new UnauthorizedException(
+        'Bad Email',
+      ); //if passwd doesnt match
+    const pwMatch = await argon.verify(
+      user.password,
+      dto.password,
+    ); //hashed
+    if (!pwMatch)
+      throw new UnauthorizedException(
+        'Bad Password',
+      );
     const accessToken = this.signToken(user.id);
     return {
       accessToken,
     };
   }
-  signToken(id) {//call jwt strategy to Retrive tokens
-    const token = jwt.sign({ id: id }, process.env.jwt_secret);
-    return token;
+  signToken(id) {
+    //call jwt strategy to Retrive tokens
+    const token = jwt.sign(
+      { id: id },
+      process.env.jwt_secret,
+    );
+    return token;//that's it!
   }
 
-  callBackGoogle (id) {
-    const token =1;
+  callBackGoogle(id) {
+    const token = 1;
     return token;
   }
-  callGoogle (id) {
-    const token =1;
+  callGoogle(id) {
+    const token = 1;
     return token;
   }
-  callBackFacebook (id) {
-    const token =1;
+  callBackFacebook(id) {
+    const token = 1;
     return token;
   }
-  callFacebook (id) {
-    const token =1;
+  callFacebook(id) {
+    const token = 1;
     return token;
   }
 
