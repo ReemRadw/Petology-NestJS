@@ -15,7 +15,9 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('StaticController')
 @Controller('static')
 export class StaticController {
-  constructor(private readonly staticService: StaticService) {}
+  constructor(
+    private readonly staticService: StaticService,
+  ) {}
 
   @Get('/homepage/second-page')
   secondPage() {
