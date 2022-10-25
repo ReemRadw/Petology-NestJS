@@ -14,11 +14,13 @@ import { AuthenticationService } from './authentication.service';
 import { SignIn, SignUp } from './dto';
 import { CreateAuthenticationDto } from './dto/create-authentication.dto';
 import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
-import {GoogleStrategy} from 'passport-token-google';
+import { GoogleStrategy } from 'passport-token-google';
 
 @Controller('authentication')
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(
+    private readonly authenticationService: AuthenticationService,
+  ) {}
 
   @Post('signUp')
   signup(@Body(ValidationPipe) dto: SignUp) {
@@ -31,25 +33,39 @@ export class AuthenticationController {
   ////////////////////////http://127.0.0.1:3000/authentication/google/callback
   @Get('google/callback')
   // @UseGuards(GoogleAuthGuard)
-  googleBackLogin(@Body(ValidationPipe) dto: SignUp) {
-    return this.authenticationService.callBackGoogle(dto);
+  googleBackLogin(
+    @Body(ValidationPipe) dto: SignUp,
+  ) {
+    return this.authenticationService.callBackGoogle(
+      dto,
+    );
   }
   @Get('google/')
   // @UseGuards(GoogleAuthGuard)
   googleLogin(@Body(ValidationPipe) dto: SignUp) {
-    return this.authenticationService.callBackGoogle(dto);
+    return this.authenticationService.callBackGoogle(
+      dto,
+    );
   }
-////////////////////////////
-@Get('google/callback')
-// @UseGuards(GoogleAuthGuard)
-facebookBackLogin(@Body(ValidationPipe) dto: SignUp) {
-  return this.authenticationService.callBackGoogle(dto);
-}
-@Get('google/')
-// @UseGuards(GoogleAuthGuard)
-facebookLogin(@Body(ValidationPipe) dto: SignUp) {
-  return this.authenticationService.callBackGoogle(dto);
-}
+  ////////////////////////////
+  @Get('facebook/callback')
+  // @UseGuards(GoogleAuthGuard)
+  facebookBackLogin(
+    @Body(ValidationPipe) dto: SignUp,
+  ) {
+    return this.authenticationService.callBackGoogle(
+      dto,
+    );
+  }
+  @Get('facebook/')
+  // @UseGuards(GoogleAuthGuard)
+  facebookLogin(
+    @Body(ValidationPipe) dto: SignUp,
+  ) {
+    return this.authenticationService.callBackGoogle(
+      dto,
+    );
+  }
 
   // // api/auth/google/redirect
   // @Get('google/redirect')
@@ -75,5 +91,4 @@ facebookLogin(@Body(ValidationPipe) dto: SignUp) {
   //     res.send(req.user ? 200 : 401);
   //   }
   // );
-
 }

@@ -2,6 +2,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  Req,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
@@ -19,15 +20,17 @@ import * as jwt from 'jsonwebtoken';
 export class AuthenticationService {
   constructor(private prisma: PrismaService) {} //define your DB conn
 
-  async signup(dto: SignUp) {//validate from dto: pipes
+  async signup(dto: SignUp) {
+    //validate from dto: pipes
     try {
       const { password, name, email } = dto;
       const hash = await argon.hash(password);
       const user = await this.prisma.user.create({
         //perform query to Create Record :)
-           data: {//array of data
+        data: {
+          //array of data
           email: email,
-          password: hash,//top secret
+          password: hash, //top secret
           name: name,
         },
       });
@@ -80,20 +83,33 @@ export class AuthenticationService {
       { id: id },
       process.env.jwt_secret,
     );
-    return token;//that's it!
+    return token; //that's it!
   }
 
-  callBackGoogle(id) {
-    const token = 1;
-    return token;
+  callBackGoogle(@Req() req) {
+    //call the lib
+    
+    //check if it's already user (DB:query) >>>> loged him In >>redirect to home
+    
+    
+    //else create new user  
+    
   }
-  callGoogle(id) {
+  callGoogle(req) {
     const token = 1;
     return token;
   }
   callBackFacebook(id) {
-    const token = 1;
-    return token;
+   
+// {
+//   status: 'connected',
+//   authResponse: {
+//       accessToken: '...',
+//       expiresIn:'...',
+//       signedRequest:'...',
+//       userID:'...'
+//   }
+// }
   }
   callFacebook(id) {
     const token = 1;
