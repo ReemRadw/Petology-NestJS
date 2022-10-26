@@ -9,6 +9,7 @@ import {
   ValidationPipe,
   Req,
   UseGuards,
+  Res,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
@@ -28,7 +29,7 @@ export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
   ) {}
-    
+
   @Post('/signUp')
   @ApiCreatedResponse({
     description: 'user Registeration',
@@ -55,26 +56,25 @@ export class AuthenticationController {
   }
   /////////////Google login
   // @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) {}
+  async googleAuth(@Req() req ) {}
   @Post('auth/google/callback')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
+  googleAuthRedirect(@Req() req ) {
     return this.authenticationService.googleLogin(
       req,
     );
+    // res.send(req.user? 200 : 401);
   }
 
   /////////////Facebook login
   // @UseGuards(AuthGuard('google'))
-  async facebookAuth(@Req() req) {}
+  async facebookAuth(@Req() req ) {}
   @Post('auth/facebook/callback')
   @UseGuards(AuthGuard('facebook'))
-  facebookAuthRedirect(@Req() req) {
+  facebookAuthRedirect(@Req() req ) {
     return this.authenticationService.facebookLogin(
-      req,
+      req
     );
+    // res.send(req.user? 200 : 401);
   }
-
-
-
 }

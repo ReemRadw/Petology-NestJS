@@ -5,7 +5,6 @@ import {
   VerifyCallback,
 } from 'passport-facebook-token';
 import { config } from 'dotenv';
-
 import { Injectable } from '@nestjs/common';
 
 config();
@@ -16,14 +15,31 @@ export class FacebookStrategy extends PassportStrategy(
   'facebook',
 ) {
   constructor() {
-    super({
-      clientID:
-        '6a7c836138e547111b961abeb520782b',
-      clientSecret: '#', //check again
-      fbGraphVersion: 'v3.0',
-      // callbackURL: 'http://localhost:3000/auth/facebook/dialog/oauth',
-      scope: ['email', 'profile'],
-    });
+    super(
+      {
+        authorizationURL:
+          'http://127.0.0.1:3000/authentication/',
+        tokenURL:
+          'http://127.0.0.1:3000/authentication/auth/facebook/callback',
+        clientID: '780800109664245',
+        clientSecret:
+          '4af41cbdabf0b7683e9cec108d0cac9f', //check again
+        fbGraphVersion: 'v3.0',
+      },
+      function (
+        accessToken,
+        refreshToken,
+        profile,
+        done,
+      ) {
+        this.prisma.findOrCreate(
+          { facebookId: profile.id },
+          function (error, user) {
+            return done(error, user);
+          },
+        );
+      },
+    );
   }
   async validate(
     accessToken: string,
@@ -31,15 +47,6 @@ export class FacebookStrategy extends PassportStrategy(
     profile: any,
     done: VerifyCallback,
   ): Promise<any> {
-    /*const { name, emails, photos } = profile;
-    const user = {
-      email: emails[0].value,
-      firstName: name.givenName,
-      lastName: name.familyName,
-      picture: photos[0].value,
-      accessToken,
-    };
-    done(null, user);*/
     done(null, profile);
   }
 }

@@ -19,8 +19,7 @@ import { JwtModule } from '@nestjs/jwt';
     GoogleStrategy,
     ConfigService,
     PrismaService,
-
-    // FacebookStrategy,
+    FacebookStrategy,
   ],
   imports: [
     PassportModule,

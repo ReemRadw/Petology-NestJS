@@ -91,15 +91,17 @@ export class AuthenticationService {
   }  
   
   //////////////Facebook
-  facebookLogin(req) {
+  facebookLogin 
+  (req) {
+    // do something with req.user
+    // res.send(req.user? 200 : 401);
     if (!req.user) {
-      return 'No user from FACEBOOK';
+      return 'No user from google';
     }
     return {
-      message: 'User Info from FACEBOOK',
+      message: 'User Info from Google',
       user: req.user,
     };
   }
-
 
 }
