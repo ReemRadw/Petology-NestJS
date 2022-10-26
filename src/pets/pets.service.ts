@@ -9,12 +9,51 @@ import { UpdatePetDto } from './dto/update-pet.dto';
 
 @Injectable()
 export class PetsService {
-  // categories(categoryId: number) {
-  //   return this.prisma.pet.findMany({
-  //    where: { categoryId: categoryId }
-  //   }
+  constructor(
+    private readonly prisma: PrismaService,
+  ) {}
+  categories(categoryId: number) {
+    return this.prisma.pet.findMany({
+      where: {
+        categoryId: { equals: categoryId },
+      },
+    });
+  }
+  // create(createPetDto: CreatePetDto) {
+  //   try {
+  //     const   {name,age,size,breed,hairLength,color,behaviour,houseTrained,description,location,phone,vaccinated,categoryId} = createPetDto;
 
-  // }
+  //     const pet =  this.prisma.pet.create({
+  //       data : {
+  //        name,
+  //        age,
+  //        behaviour,
+  //        breed,
+  //        color,
+  //        description,
+  //        hairLength,
+  //        location,
+  //        houseTrained,
+  //        phone,
+  //        size,
+  //        vaccinated,
+  //        categoryId,
+  //       }
+  //       })
+  //    }
+  // }catch (error) {
+  //          if (
+  //            error instanceof
+  //            PrismaClientKnownRequestError
+  //          ) {
+  //            if (error.code === 'P2002') {
+  //              throw new ConflictException(
+  //                'Credentials Taken',
+  //              );
+  //            }
+  //          }
+  //          throw error;
+  //        }
 
   remove(arg0: number): void {
     throw new Error('Method not implemented.');
@@ -31,10 +70,4 @@ export class PetsService {
   findAll() {
     throw new Error('Method not implemented.');
   }
-  create(createPetDto: CreatePetDto) {
-    throw new Error('Method not implemented.');
-  }
-  constructor(
-    private readonly prisma: PrismaService,
-  ) {}
 }

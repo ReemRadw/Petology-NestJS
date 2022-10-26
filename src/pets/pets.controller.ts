@@ -20,10 +20,10 @@ export class PetsController {
     private readonly petsService: PetsService,
   ) {}
 
-  @Post()
-  create(@Body() createPetDto: CreatePetDto) {
-    return this.petsService.create(createPetDto);
-  }
+  // @Post()
+  // create(@Body() createPetDto: CreatePetDto) {
+  //   return this.petsService.create(createPetDto);
+  // }
 
   @Get()
   findAll() {
@@ -50,10 +50,10 @@ export class PetsController {
   remove(@Param('id') id: string) {
     return this.petsService.remove(+id);
   }
-  // @Get('categories/:categoryID/pets')
-  // categories(){
-  //       return this.petsService.categories(
-  //      +categoryId,
-  //    );
-  // };
+  @Get('categories/:categoryId/pets')
+  categories(categoryId: number) {
+    return this.petsService.categories(
+      +categoryId,
+    );
+  }
 }
