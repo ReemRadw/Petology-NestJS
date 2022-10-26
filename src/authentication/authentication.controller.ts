@@ -63,4 +63,18 @@ export class AuthenticationController {
       req,
     );
   }
+
+  /////////////Facebook login
+  // @UseGuards(AuthGuard('google'))
+  async facebookAuth(@Req() req) {}
+  @Post('auth/facebook/callback')
+  @UseGuards(AuthGuard('facebook'))
+  facebookAuthRedirect(@Req() req) {
+    return this.authenticationService.facebookLogin(
+      req,
+    );
+  }
+
+
+
 }

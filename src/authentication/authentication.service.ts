@@ -88,5 +88,18 @@ export class AuthenticationService {
       message: 'User Info from Google',
       user: req.user,
     };
+  }  
+  
+  //////////////Facebook
+  facebookLogin(req) {
+    if (!req.user) {
+      return 'No user from FACEBOOK';
+    }
+    return {
+      message: 'User Info from FACEBOOK',
+      user: req.user,
+    };
   }
+
+
 }

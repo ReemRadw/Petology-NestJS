@@ -19,8 +19,7 @@ export class FacebookStrategy extends PassportStrategy(
     super({
       clientID:
         '6a7c836138e547111b961abeb520782b',
-      clientSecret:
-        'AIzaSyAwbkMjlMMnbKkFk8tn8KSGNGku1PPb_O4',//check again
+      clientSecret: '#', //check again
       fbGraphVersion: 'v3.0',
       // callbackURL: 'http://localhost:3000/auth/facebook/dialog/oauth',
       scope: ['email', 'profile'],
