@@ -54,17 +54,6 @@ export class AuthenticationService {
         },
       });
 
-    if (!dto.email) {
-      throw new UnauthorizedException(
-        'please enter email',
-      );
-    }
-    if (!dto.password) {
-      throw new UnauthorizedException(
-        'please enter password',
-      );
-    }
-
     if (!user)
       throw new UnauthorizedException(
         'Bad Email',
@@ -84,7 +73,7 @@ export class AuthenticationService {
   }
   signToken(id) {
     const token = jwt.sign(
-      { id: id },
+      { id },
       process.env.jwt_secret,
     );
     return token;

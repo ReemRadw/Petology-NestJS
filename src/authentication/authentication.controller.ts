@@ -47,7 +47,7 @@ export class AuthenticationController {
     type: String,
   })
   @ApiBody({ type: SignIn })
-  signin(@Body() dto: SignIn) {
+  signin(@Body(ValidationPipe) dto: SignIn) {
     return this.authenticationService.signin(dto);
   }
 }
