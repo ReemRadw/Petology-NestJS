@@ -58,24 +58,28 @@ export class PetsController {
 
   @Patch(':id')
   update(
+    //  createPetDto: CreatePetDto,
+    @Req() request,
     @Param('id') id: string,
     @Body() updatePetDto: UpdatePetDto,
   ) {
     return this.petsService.update(
-      +id,
+     + id,
       updatePetDto,
+      // createPetDto,
+      request,
     );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.petsService.remove(+id);
+  remove(@Param('id') id: number) {
+    return this.petsService.remove(+id);//number must have +
   }
   @Get('categories/:categoryId/pets')
-  categories( 
+  categories(
     @Body(ValidationPipe) createPetDto,
     @Param('categoryId') categoryId: string,
-   ) {
+  ) {
     return this.petsService.categories(
       +categoryId,
     );

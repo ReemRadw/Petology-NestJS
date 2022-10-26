@@ -29,6 +29,7 @@ export class JwtStrategy extends PassportStrategy(
           id: payload.id,
         },
       });
+    console.log('hhhhhhhh');
     delete user.password;
     return user;
   }
