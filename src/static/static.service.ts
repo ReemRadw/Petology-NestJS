@@ -18,8 +18,7 @@ export class StaticService {
     };
   }
 
-<<<<<<< HEAD
-  findOne(params: { id: number }) {
+   findOne(params: { id: number }) {
     if (params.id == 1) {
       return {
         title: 'How you feed Your dog?',
@@ -32,8 +31,7 @@ export class StaticService {
       };
     }
   }
-=======
-  footerSection() {
+   footerSection() {
     return {
       "email": "Email@petology.com",
       "location": "First settlement/Cairo",
@@ -77,5 +75,4 @@ export class StaticService {
   }
 
   
->>>>>>> f32d150cc5df749846e5895fa4a7910048cef4a8
-}
+ }
