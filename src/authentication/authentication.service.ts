@@ -32,31 +32,61 @@ export class AuthenticationService {
         accessToken,
       };
     } catch (error) {
-      if (error instanceof PrismaClientKnownRequestError) {
+      if (
+        error instanceof
+        PrismaClientKnownRequestError
+      ) {
         if (error.code === 'P2002') {
-          throw new ConflictException('Credentials Taken');
+          throw new ConflictException(
+            'Credentials Taken',
+          );
         }
       }
       throw error;
     }
   }
-  async signin(dto: SignIn) {
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
 
-    if (!user) throw new UnauthorizedException('Bad Email');
-    const pwMatch = await argon.verify(user.password, dto.password);
-    if (!pwMatch) throw new UnauthorizedException('Bad Password');
+  async signin(dto: SignIn) {
+    const user =
+      await this.prisma.user.findUnique({
+        where: {
+          email: dto.email,
+        },
+      });
+
+    if (!dto.email) {
+      throw new UnauthorizedException(
+        'please enter email',
+      );
+    }
+    if (!dto.password) {
+      throw new UnauthorizedException(
+        'please enter password',
+      );
+    }
+
+    if (!user)
+      throw new UnauthorizedException(
+        'Bad Email',
+      );
+    const pwMatch = await argon.verify(
+      user.password,
+      dto.password,
+    );
+    if (!pwMatch)
+      throw new UnauthorizedException(
+        'Bad Password',
+      );
     const accessToken = this.signToken(user.id);
     return {
       accessToken,
     };
   }
   signToken(id) {
-    const token = jwt.sign({ id: id }, process.env.jwt_secret);
+    const token = jwt.sign(
+      { id: id },
+      process.env.jwt_secret,
+    );
     return token;
   }
 }

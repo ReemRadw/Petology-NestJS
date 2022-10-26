@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { PrismaService } from 'src/prisma.service';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
 
 @Injectable()
 export class PetsService {
-  create(createPetDto: CreatePetDto) {
-    return 'This action adds a new pet';
-  }
+  // categories(categoryId: number) {
+  //   return this.prisma.pet.findMany({
+  //    where: { categoryId: categoryId }
+  //   }
 
+  // }
+
+  remove(arg0: number): void {
+    throw new Error('Method not implemented.');
+  }
+  update(
+    arg0: number,
+    updatePetDto: UpdatePetDto,
+  ) {
+    throw new Error('Method not implemented.');
+  }
+  findOne(arg0: number) {
+    throw new Error('Method not implemented.');
+  }
   findAll() {
-    return `This action returns all pets`;
+    throw new Error('Method not implemented.');
   }
-
-  findOne(id: number) {
-    return `This action returns a #${id} pet`;
+  create(createPetDto: CreatePetDto) {
+    throw new Error('Method not implemented.');
   }
-
-  update(id: number, updatePetDto: UpdatePetDto) {
-    return `This action updates a #${id} pet`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} pet`;
-  }
+  constructor(
+    private readonly prisma: PrismaService,
+  ) {}
 }

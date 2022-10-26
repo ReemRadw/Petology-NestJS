@@ -15,7 +15,10 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('PetsController')
 @Controller('pets')
 export class PetsController {
-  constructor(private readonly petsService: PetsService) {}
+  prisma: any;
+  constructor(
+    private readonly petsService: PetsService,
+  ) {}
 
   @Post()
   create(@Body() createPetDto: CreatePetDto) {
@@ -33,12 +36,24 @@ export class PetsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePetDto: UpdatePetDto) {
-    return this.petsService.update(+id, updatePetDto);
+  update(
+    @Param('id') id: string,
+    @Body() updatePetDto: UpdatePetDto,
+  ) {
+    return this.petsService.update(
+      +id,
+      updatePetDto,
+    );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.petsService.remove(+id);
   }
+  // @Get('categories/:categoryID/pets')
+  // categories(){
+  //       return this.petsService.categories(
+  //      +categoryId,
+  //    );
+  // };
 }
