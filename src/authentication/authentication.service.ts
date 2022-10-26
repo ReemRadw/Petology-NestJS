@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -42,7 +43,7 @@ export class AuthenticationService {
           );
         }
       }
-      throw error;
+      throw new BadRequestException();
     }
   }
 
@@ -88,5 +89,15 @@ export class AuthenticationService {
       process.env.jwt_secret,
     );
     return token;
+  }
+  //////////////Google
+  googleLogin(req) {
+    if (!req.user) {
+      return 'No user from google';
+    }
+    return {
+      message: 'User Info from Google',
+      user: req.user,
+    };
   }
 }

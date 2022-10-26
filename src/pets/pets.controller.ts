@@ -51,7 +51,9 @@ export class PetsController {
     return this.petsService.remove(+id);
   }
   @Get('categories/:categoryId/pets')
-  categories(categoryId: number) {
+  categories(
+    @Param('categoryId') categoryId: number,
+  ) {
     return this.petsService.categories(
       +categoryId,
     );

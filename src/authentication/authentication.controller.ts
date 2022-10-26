@@ -7,7 +7,10 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBody,
   ApiCreatedResponse,
@@ -49,5 +52,15 @@ export class AuthenticationController {
   @ApiBody({ type: SignIn })
   signin(@Body() dto: SignIn) {
     return this.authenticationService.signin(dto);
+  }
+  /////////////Google login
+  // @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req) {}
+  @Post('auth/google/callback')
+  @UseGuards(AuthGuard('google'))
+  googleAuthRedirect(@Req() req) {
+    return this.authenticationService.googleLogin(
+      req,
+    );
   }
 }
