@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(
       secretOrKey: config.get('JWT_SECRET'),
     });
   }
-  async validate(payload: { id: number }) {
+  async validate(payload: { id: string }) {
     const user =
       await this.prisma.user.findUnique({
         where: {
