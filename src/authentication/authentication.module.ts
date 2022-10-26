@@ -8,14 +8,18 @@ import { JwtStrategy } from 'src/strategy/jwt.strategy';
 // import { FacebookStrategy } from 'src/strategy/facebook.strategy';
 // import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+ import { config } from 'process';
+ 
 @Module({
   controllers: [AuthenticationController],
   providers: [
     AuthenticationService,
     PrismaService,
-    // JwtStrategy,
+    JwtStrategy,
     GoogleStrategy,
-    ConfigService
+    ConfigService,
+    PrismaService,
+
     // FacebookStrategy,
   ],
   imports: [PassportModule, 

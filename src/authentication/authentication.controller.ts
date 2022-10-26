@@ -28,7 +28,7 @@ export class AuthenticationController {
   constructor(
     private readonly authenticationService: AuthenticationService,
   ) {}
-
+    
   @Post('/signUp')
   @ApiCreatedResponse({
     description: 'user Registeration',
@@ -50,7 +50,7 @@ export class AuthenticationController {
     type: String,
   })
   @ApiBody({ type: SignIn })
-  signin(@Body() dto: SignIn) {
+  signin(@Body(ValidationPipe) dto: SignIn) {
     return this.authenticationService.signin(dto);
   }
   /////////////Google login
