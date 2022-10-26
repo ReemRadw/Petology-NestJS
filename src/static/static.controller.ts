@@ -29,4 +29,17 @@ export class StaticController {
     console.log(params.id);
     return this.staticService.findOne(params);
   }
+  @Get('homepage/first-section')
+  firstPage() {
+    return this.staticService.firstSection();
+  }
+  @Get('homepage/footer')
+  footerSection() {
+    return this.staticService.footerSection();
+  }
+  @Get('homepage/pet-needs')
+  petNeeds() {
+    return this.staticService.petNeedsSection();
+  }
+
 }
