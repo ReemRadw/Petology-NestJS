@@ -54,7 +54,7 @@ export class CreatePetDto {
   @IsNotEmpty()
   behaviour: string;
   @ApiProperty({
-    type: String,
+    type: Boolean,
     description: 'houseTrained',
   })
   @IsBoolean()
@@ -78,13 +78,13 @@ export class CreatePetDto {
   @IsNotEmpty()
   phone: string;
   @ApiProperty({
-    type: String,
+    type: Boolean,
     description: 'vaccinated',
   })
   @IsBoolean()
   vaccinated: boolean;
   @ApiProperty({
-    type: String,
+    type: Number,
     description: 'number',
   })
   @IsNotEmpty()
