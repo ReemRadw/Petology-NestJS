@@ -25,7 +25,7 @@ import {
 import { request } from 'http';
 import { response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(AuthGuard('jwt'))
 @ApiTags('PetsController')
 @Controller('pets')
 export class PetsController {
@@ -34,19 +34,16 @@ export class PetsController {
     private readonly petsService: PetsService,
   ) {}
 
-  @Post()
+  @Post('create')
   create(
-    @Body(ValidationPipe)
-    createPetDto: CreatePetDto,
-    @Req() request,
-  ) {
+    @Body(ValidationPipe)createPetDto: CreatePetDto,@Req() request) {
     return this.petsService.create(
       createPetDto,
-      request,
+      // request,
     );
   }
 
-  @Get()
+  @Get('')
   findAll() {
     return this.petsService.findAll();
   }
@@ -56,25 +53,26 @@ export class PetsController {
     return this.petsService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Post('update/:id')
   update(
     //  createPetDto: CreatePetDto,
     @Req() request,
-    @Param('id') id: string,
-    @Body() updatePetDto: UpdatePetDto,
+    @Param('id') id: number,
+    @Body() updatePetDto: CreatePetDto,
   ) {
     return this.petsService.update(
-     + id,
+      +id,
       updatePetDto,
       // createPetDto,
       request,
     );
   }
 
-  @Delete(':id')
+  @Get('delete/:id')
   remove(@Param('id') id: number) {
-    return this.petsService.remove(+id);//number must have +
+    return this.petsService.remove(+id); //number must have +
   }
+
   @Get('categories/:categoryId/pets')
   categories(
     @Body(ValidationPipe) createPetDto,

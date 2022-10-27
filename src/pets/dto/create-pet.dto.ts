@@ -21,7 +21,7 @@ export class CreatePetDto {
     type: String,
     description: 'age',
   })
-  @IsInt()
+  // @IsInt()
   age: string;
   @ApiProperty({
     type: String,
@@ -60,7 +60,7 @@ export class CreatePetDto {
   @IsBoolean()
   houseTrained: boolean;
   @ApiProperty({
-    type: String,
+    type: Number,
     description: 'description',
   })
   @IsNotEmpty()
@@ -81,7 +81,7 @@ export class CreatePetDto {
     type: Boolean,
     description: 'vaccinated',
   })
-  @IsBoolean()
+  // @IsBoolean()
   vaccinated: boolean;
   @ApiProperty({
     type: Number,
@@ -89,4 +89,6 @@ export class CreatePetDto {
   })
   @IsNotEmpty()
   categoryId: number;
+  @IsNotEmpty()
+  userId: string;
 }

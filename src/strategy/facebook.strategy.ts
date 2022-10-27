@@ -20,7 +20,7 @@ export class FacebookStrategy extends PassportStrategy(
         authorizationURL:
           'http://127.0.0.1:3000/authentication/',
         tokenURL:
-        // AccessToken.getCurrentAccessToken(),
+          // AccessToken.getCurrentAccessToken(),
           'http://127.0.0.1:3000/authentication/auth/facebook/callback',
         clientID: '780800109664245',
         clientSecret:
