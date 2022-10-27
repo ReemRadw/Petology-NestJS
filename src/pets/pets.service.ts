@@ -76,7 +76,7 @@ export class PetsService {
           // userId: '1',
         },
       });
-      console.log(pet);
+      // console.log(pet);
       return pet;
     } catch (error) {
       if (
