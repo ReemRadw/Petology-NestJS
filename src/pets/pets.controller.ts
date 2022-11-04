@@ -25,7 +25,7 @@ import {
 import { request } from 'http';
 import { response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 @ApiTags('PetsController')
 @Controller('pets')
 export class PetsController {
@@ -36,11 +36,20 @@ export class PetsController {
 
   @Post('create')
   create(
-    @Body(ValidationPipe)createPetDto: CreatePetDto,@Req() request) {
+    @Req() request,
+    // @Param('id') id: number,
+    @Body(ValidationPipe)
+    createPetDto: CreatePetDto,
+  ) {
     return this.petsService.create(
       createPetDto,
-      // request,
+      request,
     );
+  }
+
+  @Get('user')
+  user(@Req() request) {
+    return this.petsService.userProfile(request);
   }
 
   @Get('')

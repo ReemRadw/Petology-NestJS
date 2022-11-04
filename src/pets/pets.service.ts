@@ -4,6 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { request } from 'express';
 import { PrismaService } from 'src/prisma.service';
 import { CreatePetDto } from './dto/create-pet.dto';
 import { UpdatePetDto } from './dto/update-pet.dto';
@@ -22,7 +23,7 @@ export class PetsService {
   }
   async create(
     createPetDto: CreatePetDto,
-    // request,
+    request,
   ) {
     try {
       const {
@@ -39,8 +40,11 @@ export class PetsService {
         phone,
         vaccinated,
         categoryId,
-        userId,
+        // userId,
       } = createPetDto;
+      console.log(request.user);
+      console.log("############################");
+      console.log(createPetDto);
 
       const pet = await this.prisma.pet.create({
         data: {
@@ -57,7 +61,7 @@ export class PetsService {
           size: createPetDto.size,
           vaccinated: createPetDto.vaccinated,
           categoryId: createPetDto.categoryId,
-          userId: createPetDto.userId,
+          userId: request.user.id,
 
           // name: 'createPetDto.name',
           // age: 'createPetDto.age',
@@ -76,7 +80,7 @@ export class PetsService {
           // userId: '1',
         },
       });
-      // console.log(pet);
+      console.log(request.user);
       return pet;
     } catch (error) {
       if (
@@ -225,5 +229,9 @@ export class PetsService {
   }
   getPet() {
     return this.prisma.pet.findMany();
+  }
+
+  userProfile(request) {
+    return request.user;
   }
 }

@@ -89,6 +89,6 @@ export class CreatePetDto {
   })
   @IsNotEmpty()
   categoryId: number;
-  @IsNotEmpty()
-  userId: string;
+  // @IsNotEmpty()
+  // userId: string;
 }
