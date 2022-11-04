@@ -16,4 +16,38 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+  pets      Pet[]
 }
+ 
+model Pet {
+  id           Int      @id @default(autoincrement())
+  name         String
+  breed        String
+  age          String
+  size         String
+  goodWith     String
+  color        String
+  hairLength   String
+  behaviour    String
+  categoryId   Int
+  category     Category @relation(fields: [categoryId], references: [id])
+  user         String
+  firstName    String
+  lastName     String
+  image        String
+  createdAt    DateTime @default(now())
+  description  String
+  phone        String
+  location     String
+  vaccinated   Boolean
+  houseTrained Boolean
+  userId       Int
+  User         User     @relation(fields: [userId], references: [id])
+}
+
+model Category {
+  id    Int    @id @default(autoincrement())
+  name  String
+  petId Pet[]
+}
+ 

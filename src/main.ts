@@ -8,7 +8,7 @@ async function bootstrap() {
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
-
+ 
   const config = new DocumentBuilder()
     .setTitle('Petology')
     .setDescription('The petology API')
@@ -18,5 +18,6 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   await app.listen(3000);
-}
+   // process.env
+ }
 bootstrap();
