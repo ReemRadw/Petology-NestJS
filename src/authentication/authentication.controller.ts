@@ -56,10 +56,10 @@ export class AuthenticationController {
   }
   /////////////Google login
   // @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req ) {}
+  async googleAuth(@Req() req) {}
   @Post('auth/google/callback')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req ) {
+  googleAuthRedirect(@Req() req) {
     return this.authenticationService.googleLogin(
       req,
     );
@@ -68,12 +68,12 @@ export class AuthenticationController {
 
   /////////////Facebook login
   // @UseGuards(AuthGuard('google'))
-  async facebookAuth(@Req() req ) {}
-  @Post('auth/facebook/callback')
+  async facebookAuth(@Req() req) {}
   @UseGuards(AuthGuard('facebook'))
-  facebookAuthRedirect(@Req() req ) {
+  @Post('auth/facebook/callback')
+  facebookAuthRedirect(@Req() req) {
     return this.authenticationService.facebookLogin(
-      req
+      req,
     );
     // res.send(req.user? 200 : 401);
   }
