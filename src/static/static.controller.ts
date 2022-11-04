@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { StaticService } from './static.service';
 import { CreateStaticDto } from './dto/create-static.dto';
@@ -28,5 +29,17 @@ export class StaticController {
   findOne(@Param() params) {
     console.log(params.id);
     return this.staticService.findOne(params);
+  }
+  @Get('homepage/first-section')
+  firstPage() {
+    return this.staticService.firstSection();
+  }
+  @Get('homepage/footer')
+  footerSection() {
+    return this.staticService.footerSection();
+  }
+  @Get('homepage/pet-needs')
+  petNeeds() {
+    return this.staticService.petNeedsSection();
   }
 }

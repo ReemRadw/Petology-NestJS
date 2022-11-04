@@ -2,20 +2,30 @@ import { Module } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from './authentication.controller';
 import { PassportModule } from '@nestjs/passport';
-import { PrismaService } from 'src/prisma.service';
-// import { SessionSerializer } from './utils/Serializer';
- // import { TypeOrmModule } from '@nestjs/typeorm';
-// import { User } from '../typeorm/entities/User';
+import { PrismaService } from 'src/prisma.service'; 
+import { GoogleStrategy } from 'src/strategy/google.strategy';
+import { JwtStrategy } from 'src/strategy/jwt.strategy';
+import { FacebookStrategy } from 'src/strategy/facebook.strategy';
+import { ConfigService } from '@nestjs/config';
+import { config } from 'process';
+import { JwtModule } from '@nestjs/jwt';
+
 @Module({
   controllers: [AuthenticationController],
-  providers: [AuthenticationService, PrismaService,
-    //  GoogleStrategy,
-    // SessionSerializer,
-    // {
-    //   provide: 'AUTH_SERVICE',
-    //   useClass: AuthService,
-    // },
+  providers: [
+    AuthenticationService,
+    PrismaService,
+    JwtStrategy,
+    GoogleStrategy,
+    ConfigService,
+    PrismaService,
+    FacebookStrategy,
   ],
-  imports: [PassportModule],
-})
+  imports: [
+    PassportModule,
+    JwtModule.register({}),
+
+    // PassportModule.register({defaultStrategy: 'jwt' }),
+  ],
+ })
 export class AuthenticationModule {}

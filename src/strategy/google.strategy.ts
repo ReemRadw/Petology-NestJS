@@ -1,42 +1,61 @@
-import { Injectable } from '@nestjs/common';
+ 
+/* eslint-disable prettier/prettier */
 import { PassportStrategy } from '@nestjs/passport';
-import passport from 'passport';
-import { Strategy } from 'passport-token-google';
+import {
+  Strategy,
+  VerifyCallback,
+} from 'passport-google-token';
+import { config } from 'dotenv';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-
-//please do'nt respond
-
-@Injectable()
+import { randomUUID } from 'crypto';
+import * as argon from 'argon2';
+config();
+ @Injectable()
 export class GoogleStrategy extends PassportStrategy(
   Strategy,
   'google',
 ) {
-  constructor(private prisma: PrismaService) {
-    super();
+ 
+  constructor(
+    private readonly prisma: PrismaService,
+  ) {
+    super(
+      {
+        clientID:
+          '597158128975-57qqvamh4j11tmcnumklpaukkpnl0flv.apps.googleusercontent.com',
+        clientSecret:
+          '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',
+        fbGraphVersion: 'v3.0',
+        scope: ['email', 'profile'],
+      },
+    );
   }
-  async validate(payload: {
-    sub: number;
-    email: string;
-  }) {
-    const user =
-      await this.prisma.user.findUnique({
-        where: {
-          id: payload.sub,
-        },
-      });
-    delete user.password;
-    return user;
-  }
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: any,
+    done: VerifyCallback,
+  ): Promise<any> {
+     const { id, name, emails, photos, _json } =
+      profile;
 
-  //     passport.use(new Strategy({
-  //         clientID: process.env.GOOGLE_CLIENT_ID,
-  //         clientSecret: process.env.GOOGLE_CLIENT_SECRET
-  //     },
-  //   function(idToken, refreshToken, profile, done) {
-  //     fetchGoogleUser(profile, idToken)
-  //       .then((user) => done(null, user))
-  //       .catch((err) => {
-  //         // Handle the error
-  //         done(null, {})
-  //       });
-}
+    const hash = await argon.hash(
+      randomUUID() + ' ' + id,
+    ); //combination
+    const User = await this.prisma.user.create({
+      data: {
+        name:
+          name.givenName + ' ' + name.familyName,
+        email: emails[0].value,
+        password: hash,
+        googleId: id,
+        picture: _json.picture,
+        // accessToken: accessToken,
+        // createdAt: this.now
+      },
+    });
+
+    done(null, profile);
+  }
+ }
