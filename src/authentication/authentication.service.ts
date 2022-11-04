@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -45,6 +46,37 @@ export class AuthenticationService {
       throw error;
     }
   }
+  // async signup(dto: SignUp) {
+  //   try {
+  //     const { password, name, email } = dto;
+  //     const hash = await argon.hash(password);
+  //     const user = await this.prisma.user.create({
+  //       data: {
+  //         email: email,
+  //         password: hash,
+  //         name: name,
+  //       },
+  //     });
+
+  //     const accessToken = this.signToken(user.id);
+  //     console.log(accessToken);
+  //     return {
+  //       accessToken,
+  //     };
+  //   } catch (error) {
+  //     if (
+  //       error instanceof
+  //       PrismaClientKnownRequestError
+  //     ) {
+  //       if (error.code === 'P2002') {
+  //         throw new ConflictException(
+  //           'Credentials Taken',
+  //         );
+  //       }
+  //     }
+  //     throw new BadRequestException();
+  //   }
+  // }
 
   async signin(dto: SignIn) {
     const user =
@@ -53,17 +85,6 @@ export class AuthenticationService {
           email: dto.email,
         },
       });
-
-    if (!dto.email) {
-      throw new UnauthorizedException(
-        'please enter email',
-      );
-    }
-    if (!dto.password) {
-      throw new UnauthorizedException(
-        'please enter password',
-      );
-    }
 
     if (!user)
       throw new UnauthorizedException(
@@ -88,5 +109,28 @@ export class AuthenticationService {
       process.env.jwt_secret,
     );
     return token;
+  }
+  //////////////Google
+  googleLogin(req) {
+    if (!req.user) {
+      return 'No user from google';
+    }
+    return {
+      message: 'User Info from Google',
+      user: req.user,
+    };
+  }
+
+  //////////////Facebook
+  facebookLogin(req) {
+    // do something with req.user
+    // res.send(req.user? 200 : 401);
+    if (!req.user) {
+      return 'No user from google';
+    }
+    return {
+      message: 'User Info from Google',
+      user: req.user,
+    };
   }
 }

@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { StaticService } from './static.service';
 import { CreateStaticDto } from './dto/create-static.dto';
@@ -41,5 +42,4 @@ export class StaticController {
   petNeeds() {
     return this.staticService.petNeedsSection();
   }
-
 }

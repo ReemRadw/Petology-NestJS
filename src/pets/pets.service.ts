@@ -19,55 +19,137 @@ export class PetsService {
       },
     });
   }
-  // create(createPetDto: CreatePetDto) {
-  //   try {
-  //     const   {name,age,size,breed,hairLength,color,behaviour,houseTrained,description,location,phone,vaccinated,categoryId} = createPetDto;
+  async create(
+    createPetDto: CreatePetDto,
+    request,
+  ) {
+    try {
+      const {
+        name,
+        age,
+        size,
+        breed,
+        hairLength,
+        color,
+        behaviour,
+        houseTrained,
+        description,
+        location,
+        phone,
+        vaccinated,
+        categoryId,
+      } = createPetDto;
 
-  //     const pet =  this.prisma.pet.create({
-  //       data : {
-  //        name,
-  //        age,
-  //        behaviour,
-  //        breed,
-  //        color,
-  //        description,
-  //        hairLength,
-  //        location,
-  //        houseTrained,
-  //        phone,
-  //        size,
-  //        vaccinated,
-  //        categoryId,
-  //       }
-  //       })
-  //    }
-  // }catch (error) {
-  //          if (
-  //            error instanceof
-  //            PrismaClientKnownRequestError
-  //          ) {
-  //            if (error.code === 'P2002') {
-  //              throw new ConflictException(
-  //                'Credentials Taken',
-  //              );
-  //            }
-  //          }
-  //          throw error;
-  //        }
-
-  remove(arg0: number): void {
-    throw new Error('Method not implemented.');
+      const pet = await this.prisma.pet.create({
+        data: {
+          name,
+          age,
+          behaviour,
+          breed,
+          color,
+          description,
+          hairLength,
+          location,
+          houseTrained,
+          phone,
+          size,
+          vaccinated,
+          categoryId,
+          userId: request.user.id,
+        },
+      });
+      return pet;
+    } catch (error) {
+      if (
+        error instanceof
+        PrismaClientKnownRequestError
+      ) {
+        if (error.code === 'P2002') {
+          throw new ConflictException(
+            'Credentials Taken',
+          );
+        }
+      }
+      throw error;
+    }
   }
+  async remove(Id: number) {
+    return this.prisma.pet.delete({
+      where: {
+        id : Id ,//most left model /table :)
+      },
+    });  }
   update(
-    arg0: number,
+    id : number,
+    // createPetDto: CreatePetDto,
+    request,
     updatePetDto: UpdatePetDto,
   ) {
-    throw new Error('Method not implemented.');
+    // const 
+    try {
+      const {
+        name,
+        age,
+        size,
+        breed,
+        hairLength,
+        color,
+        behaviour,
+        houseTrained,
+        description,
+        location,
+        phone,
+        vaccinated,
+        categoryId,
+      } = updatePetDto;
+ 
+    //////////
+    return this.prisma.pet.update({
+      where: {
+        id : id ,//most left model /table :)
+      },data :{
+        name,
+        age,
+        behaviour,
+        breed,
+        color,
+        description,
+        hairLength,
+        location,
+        houseTrained,
+        phone,
+        size,
+        vaccinated,
+        categoryId,
+        userId: request.user.id,
+      }
+    }); 
+    // return pet;
+  } catch (error) {
+    if (
+      error instanceof
+      PrismaClientKnownRequestError
+    ) {
+      if (error.code === 'P2002') {
+        throw new ConflictException(
+          'Credentials Taken',
+        );
+      }
+    }
+    throw error;
+  }
   }
   findOne(arg0: number) {
-    throw new Error('Method not implemented.');
-  }
+    return this.prisma.pet.findFirst({
+      where: {
+        id : arg0 ,//most left model /table :)
+      },
+    });   }
   findAll() {
-    throw new Error('Method not implemented.');
+    return this.prisma.pet.findMany({
+     
+    });   }
+  getPet() {
+    return this.prisma.pet.findMany();
   }
 }

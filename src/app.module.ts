@@ -8,7 +8,12 @@ import { ConfigModule } from '@nestjs/config';
 import { PetsModule } from './pets/pets.module';
 
 @Module({
-  imports: [AuthenticationModule, StaticModule, ConfigModule.forRoot(), PetsModule],
+  imports: [
+    AuthenticationModule,
+    StaticModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    PetsModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
